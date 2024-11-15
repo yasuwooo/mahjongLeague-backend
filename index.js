@@ -44,7 +44,7 @@ const rateLimiter = rateLimit({
 app.use("/", rateLimiter);
 
 // CSRFトークンを取得するためのエンドポイント
-app.get("/csrf-token", csrfProtection, (req, res) => {
+app.get("/api/csrf-token", csrfProtection, (req, res) => {
   const csrfToken = req.csrfToken();
   console.log("csrfToken: ", csrfToken);
   // res.set("X-CSRF-Token", csrfToken);
@@ -71,14 +71,14 @@ const matchRoute = require("./routes/match");
 const rankingRoute = require("./routes/ranking");
 
 // ルートごとにCSRFプロテクションを適用
-app.use("/register", csrfProtection, registerRoute);
-app.use("/login", csrfProtection, loginRoute);
-app.use("/changepassword", csrfProtection, changePasswordRoute);
-app.use("/changeuserdata", csrfProtection, changeUserDataRoute);
-app.use("/image", csrfProtection, imageRoute);
-app.use("/user", csrfProtection, userRoute);
-app.use("/match", csrfProtection, matchRoute);
-app.use("/ranking", csrfProtection, rankingRoute);
+app.use("/api/register", csrfProtection, registerRoute);
+app.use("/api/login", csrfProtection, loginRoute);
+app.use("/api/changepassword", csrfProtection, changePasswordRoute);
+app.use("/api/changeuserdata", csrfProtection, changeUserDataRoute);
+app.use("/api/image", csrfProtection, imageRoute);
+app.use("/api/user", csrfProtection, userRoute);
+app.use("/api/match", csrfProtection, matchRoute);
+app.use("/api/ranking", csrfProtection, rankingRoute);
 
 // サーバー起動
 app.listen(process.env.PORT, () => {
