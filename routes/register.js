@@ -79,7 +79,6 @@ router.post(
         email: req.body.email,
         password: hashedPassword,
         verificationToken: verificationToken,
-        isVerified: false,
       });
 
       // ユーザーをデータベースに保存
@@ -89,7 +88,6 @@ router.post(
       setTimeout(async () => {
         const userToDelete = await User.findOne({
           verificationToken: verificationToken,
-          isVerified: false,
         });
         if (userToDelete) {
           await User.deleteOne({ _id: userToDelete._id });
@@ -137,7 +135,6 @@ router.get("/verify/:token", async (req, res) => {
       return res.status(400).json("無効なトークンです");
     }
 
-    user.isVerified = true;
     user.verificationToken = undefined; // トークンを無効化
     await user.save();
 
